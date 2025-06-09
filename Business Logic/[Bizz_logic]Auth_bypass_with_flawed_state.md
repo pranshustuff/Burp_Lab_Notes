@@ -1,4 +1,4 @@
-# 🧪 Burp Lab Note: *Authentication bypass via flawed state machine*
+# Burp Lab Note: *Authentication bypass via flawed state machine*
 
 ## 🔹 Lab Metadata
 - **Title**: Authentication bypass via flawed state machine
@@ -7,12 +7,12 @@
 
 ---
 
-## 🎯 Lab Objective
+## Lab Objective
 > _To find a flaw in the login process workflow and gain access to admin status and delete user `carlos`_
 
 ---
 
-## 🧠 Application Logic Overview
+## Application Logic Overview
 - **Normal Workflow**:
   - Login page credentials -> click login -> Select role (User/Author) -> Account Page
 - **Security Assumption**:
@@ -22,7 +22,7 @@
 
 ---
 
-## 🔍 Observations
+## Observations
 - **Endpoints Involved**: 
   - `POST /role-selector`, `GET /role-selector`, `GET /admin`
 - **Interesting Behaviors**:
@@ -32,7 +32,7 @@
 
 ---
 
-## 🧨 Vulnerability Summary
+## Vulnerability Summary
 - **Vulnerability Type**: Business Logic
 - **Abused Logic**:
   - The site didn't know what to do if the Role Selector returned Null.
@@ -43,7 +43,7 @@
 
 ---
 
-## 🧪 Exploitation Steps
+## Exploitation Steps
 1. Login with valid credentials and intercept `GET /role-selector`
 2. Drop the intercepted request
 3. Navigate manually to `/` and it defaults to admin status
@@ -51,13 +51,13 @@
 
 ---
 
-## 🧰 Fix Suggestions
+## Fix Suggestions
 - Handle the error gracefully by defaulting to User Role. Or by rolling back the entire login.
 - Role selection before session activation.
 
 ---
 
-## ✍️ Notes & Reflections
+## Notes & Reflections
 - Subtle and fun — abusing what the app doesn't expect.
 - Shows how skipping just *one* step in a workflow can break everything.
 - Reinforces the value of manipulating flows, not just inputs.
